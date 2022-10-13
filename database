@@ -1,0 +1,45 @@
+
+
+ 	CREATE TABLE `foodcategory` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `categoryName` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
+ `picture` varchar(200) COLLATE utf8_turkish_ci NOT NULL,
+ PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci
+
+ 	CREATE TABLE `foods` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `cateogryID` int(11) NOT NULL,
+ `foodName` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
+ `picture` varchar(200) COLLATE utf8_turkish_ci NOT NULL,
+ PRIMARY KEY (`ID`),
+ KEY `cateogryID` (`cateogryID`),
+ CONSTRAINT `foods_ibfk_1` FOREIGN KEY (`cateogryID`) REFERENCES `foodcategory` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci
+
+ 	CREATE TABLE `foodSales` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `foodID` int(11) NOT NULL,
+ `restuarantID` int(11) NOT NULL,
+ `userID` int(11) NOT NULL,
+ `amount` double(18,2) NOT NULL,
+ PRIMARY KEY (`ID`),
+ KEY `foodID` (`foodID`),
+ KEY `restuarantID` (`restuarantID`),
+ KEY `userID` (`userID`),
+ CONSTRAINT `foodSales_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`),
+ CONSTRAINT `foodSales_ibfk_2` FOREIGN KEY (`foodID`) REFERENCES `foods` (`ID`),
+ CONSTRAINT `foodSales_ibfk_3` FOREIGN KEY (`restuarantID`) REFERENCES `restuarants` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci
+
+ 	CREATE TABLE `restuarantFoodSet` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `restuarantID` int(11) NOT NULL,
+ `foodID` int(11) NOT NULL,
+ `price` double(18,2) NOT NULL,
+ PRIMARY KEY (`ID`),
+ KEY `restuarantID` (`restuarantID`),
+ KEY `foodID` (`foodID`),
+ CONSTRAINT `restuarantFoodSet_ibfk_1` FOREIGN KEY (`foodID`) REFERENCES `foods` (`ID`),
+ CONSTRAINT `restuarantFoodSet_ibfk_2` FOREIGN KEY (`restuarantID`) REFERENCES `restuarants` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci
